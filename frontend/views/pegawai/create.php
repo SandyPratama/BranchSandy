@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $model app\models\Pegawai */
 
 $this->title = 'Create Pegawai';
-$this->params['breadcrumbs'][] = ['label' => 'Pegawais', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Pegawai', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="pegawai-create">

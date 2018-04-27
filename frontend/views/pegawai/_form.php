@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use app\models\Kota;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Pegawai */
@@ -10,7 +12,9 @@ use yii\widgets\ActiveForm;
 
 <div class="pegawai-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(); 
+          $data_list = ArrayHelper::map(Kota::find()->all(),'id','nama_kota');
+    ?>
 
     <?= $form->field($model, 'nama')->textInput(['maxlength' => true]) ?>
 
@@ -18,16 +22,12 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'alamat')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'domisili')->textInput() ?>
+    <?= $form->field($model, 'domisili')->DropDownList($data_list, ['prompt' => 'Pilih Domisili']) ?>
 
     <?= $form->field($model, 'kode_pos')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
-
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?php echo Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

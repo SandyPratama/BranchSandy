@@ -30,6 +30,39 @@ class KotaController extends Controller
         ]);
     }
 
+    public function actionView($id)
+    {
+    	$model = $this->findModel($id);
+
+    	return $this->render('view',['model' => $model]);
+    }
+
+    public function actionUpdate($id)
+    {
+    	$model = $this->findModel($id);
+
+    	if($model->load(Yii::$app->request->post()) && $model->save()){
+    		return $this->redirect(['index']);
+    	} else {
+    	return $this->render('update',['model'=> $model]);
+    	}
+    }
+
+    public function actionDelete($id)
+    {
+    	$model = $this->findModel($id)->delete();
+
+    	return $this->redirect(['index']);
+    }
+
+    public function findModel($id)
+    {
+    	if(($model = Kota::findOne($id)) !== null) {
+    		return $model;
+	   	} else {
+	   		throw new NotFoundHttpException('The requested page does not exist');
+	   	}
+    }
     
 }
 ?>

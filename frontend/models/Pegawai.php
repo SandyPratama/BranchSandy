@@ -3,6 +3,9 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "pegawai".
@@ -16,7 +19,7 @@ use Yii;
  * @property string $created_at
  * @property string $updated_at
  */
-class Pegawai extends \yii\db\ActiveRecord
+class Pegawai extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -32,10 +35,10 @@ class Pegawai extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nama', 'email', 'alamat', 'domisili', 'kode_pos', 'created_at', 'updated_at'], 'required'],
+            [['nama', 'email', 'alamat', 'domisili', 'kode_pos'], 'required'],
             [['alamat'], 'string'],
-            [['domisili'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['id', 'domisili'], 'integer'],
+            // [['created_at', 'updated_at'], 'safe'],
             [['nama', 'email'], 'string', 'max' => 255],
             [['kode_pos'], 'string', 'max' => 32]
         ];
@@ -56,5 +59,25 @@ class Pegawai extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::className(),
+                // 'attributes' => [
+                //     ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                //     ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                // ],
+                'value' => new Expression('NOW()') 
+            ],
+        ];
+    }
+
+    
+    public function getKota()
+    {
+        return $this->hasOne(Kota::className(), ['id' => 'domisili']);
     }
 }

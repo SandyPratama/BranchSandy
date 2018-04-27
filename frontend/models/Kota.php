@@ -2,8 +2,11 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
+use yii\db\Expression;
 
-class Kota extends \yii\db\ActiveRecord
+class Kota extends ActiveRecord
 {
 	public static function tableName()
 	{
@@ -13,8 +16,8 @@ class Kota extends \yii\db\ActiveRecord
 	public function rules()
     {
         return [
-            [['nama_kota','created_at','updated_at'], 'required'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['id','nama_kota'], 'required'],
+            [['id'],'integer'],
             [['nama_kota'], 'string', 'max' => 255],
         ];
     }
@@ -31,5 +34,21 @@ class Kota extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
         ];
     }
+
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at','updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => 'created_at',
+                ],
+                'value' => new Expression('NOW()'),
+            ],
+        ];
+    }
+
+
 }
 ?>

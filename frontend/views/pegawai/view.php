@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Pegawai */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Pegawais', 'url' => ['index']];
+$this->title = 'View';
+$this->params['breadcrumbs'][] = ['label' => 'Pegawai', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="pegawai-view">

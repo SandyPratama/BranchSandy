@@ -18,9 +18,9 @@ class KotaSearch extends Kota
    public function rules()
     {
         return [
-            [['nama_kota','created_at','updated_at'], 'required'],
-            [['created_at', 'updated_at'], 'safe'],
-            [['nama_kota'], 'string', 'max' => 255],
+            [['id'], 'integer'],
+            [['nama_kota','created_at', 'updated_at'], 'safe'],
+            // [['nama_kota'], 'string', 'max' => 255],
         ];
     }
 
